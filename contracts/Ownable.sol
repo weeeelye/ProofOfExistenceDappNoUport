@@ -1,9 +1,10 @@
 pragma solidity 0.4.24;
 
+/** @title Ownable. */
 contract Ownable
 {
   address public owner;
-  bool public killSwitch;
+  bool public onOffSwitch;
 
   event OwnershipChanged(address currentOwner, address previousOwner);
 
@@ -22,16 +23,19 @@ contract Ownable
 
   modifier switchOn
   {
-    require(killSwitch == true);
+    require(onOffSwitch == true);
     _;
   }
 
   constructor() public
   {
     owner = msg.sender;
-    killSwitch = true;
+    onOffSwitch = true;
   }
 
+  /** @dev Changes the owner of the contract.
+      * @param newOwner The new owner's address.
+      */
   function changeOwner(address newOwner) public
   onlyOwner checkAddress(newOwner)
   {
@@ -40,15 +44,10 @@ contract Ownable
     emit OwnershipChanged(owner,prevOwner);
   }
 
-  function withdraw() public onlyOwner {
-    owner.transfer(address(this).balance);
-  }
-
-  function setKillSwitch(bool _killSwitch) public onlyOwner {
-    killSwitch = _killSwitch;
-  }
-
-  function kill() public onlyOwner {
-    selfdestruct(owner);
+  /** @dev Set the circuit breaker variable.
+      * @param _onOffSwitch The circuit breaker variable. true = on, false = off
+      */
+  function setonOffSwitch(bool _onOffSwitch) public onlyOwner {
+    onOffSwitch = _onOffSwitch;
   }
 }

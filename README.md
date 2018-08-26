@@ -11,6 +11,9 @@ The function on the blockchain will compare the hash from the user's submitted h
 To run it on localhost, please do the following:
 - Install truffle, ganache-cli, ethereum-bridge (https://github.com/oraclize/ethereum-bridge), localtunnel (https://github.com/localtunnel/localtunnel), along with the usual node, npm
 - Start your ganache-cli in a window
+- Start the Ethereum bridge
+  - Run: `ethereum-bridge -H localhost:8545 -a 9` where (9) is the account to deploy contract to.
+  - Copy the line that says `OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);` to contracts/ProofOfExistence.sol 's constructor. A commented out line should be present there. Replace it with yours
 - Start the backend IPFS file auth server (This is NOT a IPFS node.)
   - Run: `cd react-backend && npm install`
   - Run the server: `PORT=3001 node bin/www ``(Please take note of the generated link. You can change the port to whatever you like)

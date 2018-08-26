@@ -3,6 +3,7 @@ pragma solidity 0.4.24;
 import "./Ownable.sol";
 import "../installed_contracts/oraclize-api/contracts/usingOraclize.sol";
 
+/** @title Proof Of Existence. */
 contract ProofOfExistence is Ownable, usingOraclize {
 
   enum DocumentState{
@@ -55,12 +56,22 @@ contract ProofOfExistence is Ownable, usingOraclize {
     //OAR = OraclizeAddrResolverI(0x4E8052BA76a00fB0A220500F53A467D5b207E252);
   }
 
+  /** @dev Sets the API Gateway for obtaining file hash used for verification.
+      * @param _verifyApiCall API String.
+      */
   function setVerifyAPIGateway(string _verifyApiCall)
   public onlyOwner
   {
     verifyApiCall = _verifyApiCall;
   }
 
+
+  /** @dev Stores document data on the contract.
+      * @param _hashed_doc Hash of the document.
+      * @param _docName Name of the document.
+      * @param _ipfsHash IPFS Multihash of the document.
+      * @param _dataType MIME type of the document.
+      */
   function storeDocumentData(string _hashed_doc, bytes32 _docName, string _ipfsHash, bytes32 _dataType)
   public switchOn documentDoesNotExist(_hashed_doc)
   nonZero(_hashed_doc)
@@ -83,12 +94,23 @@ contract ProofOfExistence is Ownable, usingOraclize {
     emit DocumentStored(msg.sender, _hashed_doc, _dataType, _ipfsHash, _docName, block.number);
   }
 
+  /** @dev Gets the IPFS multihash of the document.
+      * @param _docHash Hash of the document.
+      * @return hashToDocuments[_docHash].ipfsHash The IPFS Hash.
+      */
   function getDocumentIPFSHash(string _docHash)
   public documentExist(_docHash) view returns (string)
   {
     return hashToDocuments[_docHash].ipfsHash;
   }
 
+  /** @dev Gets the IPFS multihash of the document.
+      * @param _docHash Hash of the document.
+      * @return hashToDocuments[_docHash].documentOwner The address of the owner.
+      * @return hashToDocuments[_docHash].docName The document's filename.
+      * @return hashToDocuments[_docHash].dataType The document's MIME.
+      * @return hashToDocuments[_docHash].state The document's state.
+      */
   function getDocumentMetaData(string _docHash)
   public documentExist(_docHash) view returns (address, bytes32, bytes32, uint)
   {
@@ -96,12 +118,21 @@ contract ProofOfExistence is Ownable, usingOraclize {
     hashToDocuments[_docHash].dataType, uint(hashToDocuments[_docHash].state));
   }
 
+  /** @dev Gets the document state.
+      * @param _docHash Hash of the document.
+      * @return hashToDocuments[_docHash].state The document's state.
+      */
   function getDocumentStatus(string _docHash)
   public documentExist(_docHash) view returns (uint)
   {
     return uint(hashToDocuments[_docHash].state);
   }
 
+  /** @dev Gets the document block info.
+      * @param _docHash Hash of the document.
+      * @return hashToDocuments[_docHash].publishedBlockNumber The document's block number when it is added.
+      * @return hashToDocuments[_docHash].verifiedBlockNumber The document's block number when it is verified.
+      */
   function getDocumentBlockInfo(string _docHash)
   public documentExist(_docHash) view returns (uint, uint)
   {
@@ -109,10 +140,19 @@ contract ProofOfExistence is Ownable, usingOraclize {
     hashToDocuments[_docHash].verifiedBlockNumber);
   }
 
+  /** @dev Compares two string and returns true if they are equal, false if they are not.
+      * @param a String to be compared with.
+      * @param b String to be compared with.
+      * @return bool True if they are equal, false if they are not.
+      */
   function compareStrings (string a, string b) private pure returns (bool){
        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
   }
 
+  /** @dev Callback function for the Oracle to call once they have done fetching data.
+      * @param _queryId The query ID from the Oracle.
+      * @param result The result from the Oracle.
+      */
   function __callback(bytes32 _queryId, string result)
   public
   {
@@ -136,6 +176,10 @@ contract ProofOfExistence is Ownable, usingOraclize {
         }
   }
 
+  /** @dev Verifies the data on the IPFS server by calling the Oracle to retrieve its current hash
+      * @param _docHash Hash of the document.
+      * @param result Gas price to be used for the Oracle callback.
+      */
   function verifyIPFSHash(string _docHash, uint gasPrice)
   public switchOn documentExist(_docHash) payable
   {
