@@ -8,6 +8,8 @@ A oracle service is run such that it will retrieve the file from the IPFS and ha
 The function on the blockchain will compare the hash from the user's submitted hash and the hash that the oracle service provides and update the status on the blockchain.
 
 ## Getting Started
+
+### Running on localhost
 To run it on localhost, please do the following:
 - Install truffle, ganache-cli, ethereum-bridge (https://github.com/oraclize/ethereum-bridge), localtunnel (https://github.com/localtunnel/localtunnel), along with the usual node, npm
 - Start your ganache-cli in a window
@@ -15,8 +17,29 @@ To run it on localhost, please do the following:
   - Run: `ethereum-bridge -H localhost:8545 -a 9` where (9) is the account to deploy contract to.
   - Copy the line that says `OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);` to contracts/ProofOfExistence.sol 's constructor. A commented out line should be present there. Replace it with yours
 - Start the backend IPFS file auth server (This is NOT a IPFS node.)
+  - Default will be using my server at `http://ec2-18-136-124-79.ap-southeast-1.compute.amazonaws.com/api/getHash?q=`
+  - If you do, you can skip straight to "Install the necessary packages"
   - Run: `cd react-backend && npm install`
-  - Run the server: `PORT=3001 node bin/www ``(Please take note of the generated link. You can change the port to whatever you like)
+  - Run the server: `PORT=3001 node bin/www ` (Please take note of the generated link. You can change the port to whatever you like)
+  - Edit .env file and change the line "VERIFYIPFSAPI" to the url (Please update the URL hostname and protocol(https/http) only, the query string are fixed)
+- Install the necessary packages for the UI and migrate the contracts to your local blockchain
+  - Install dependencies `npm install`
+  - Compile contracts `truffle compile`
+  - Migrate to blockchain `truffle migrate`
+  - Run `truffle test` to run the tests (You MUST start the backend server to complete the test. This also requires connection to the internet (Using Infura IPFS))
+  - Start the server `npm run start`
+
+### Running on Rinkeby
+To run it on Rinkeby, please do the follow:
+- Get at least 2 Rinkeby accounts with some Eth from the Rinkeby faucet. (For truffle test)
+- Edit `truffle.js` set the `from:` param to your account
+- Run geth: `geth --rinkeby --cache 1024 --ipcpath <IPC_PATH> --syncmode light --rpc --unlock="0,1" --password="<PASSWORD_FILE>"`
+- Wait for your node to sync (5 mins to be safe)
+- Start the backend IPFS file auth server (This is NOT a IPFS node.)
+  - Default will be using my server at `http://ec2-18-136-124-79.ap-southeast-1.compute.amazonaws.com/api/getHash?q=`
+  - If you do, you can skip straight to "Install the necessary packages"
+  - Run: `cd react-backend && npm install`
+  - Run the server: `PORT=3001 node bin/www `(Please take note of the generated link. You can change the port to whatever you like)
   - Edit .env file and change the line "VERIFYIPFSAPI" to the url (Please update the URL hostname and protocol(https/http) only, the query string are fixed)
 - Install the necessary packages for the UI and migrate the contracts to your local blockchain
   - Install dependencies `npm install`
@@ -42,4 +65,3 @@ Each test are aimed at a specific use case, such as storing a document, and veri
 
 ## Libraries
 Uses the Oraclize (https://github.com/oraclize/ethereum-api) API to provide Oracle services. This is stored at installed_contracts/
-
