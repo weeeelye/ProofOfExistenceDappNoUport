@@ -1,7 +1,8 @@
 import { Connect, SimpleSigner } from 'uport-connect'
 import ProofOfExistenceContract from '../../build/contracts/ProofOfExistence.json'
-const contract_address = "0x68ba55245cc6c3ffa7e3d215aaa8df8e4dd945f9"
+const contract_address = process.env.REACT_APP_CONTRACT_ADDRESS
 
+// This section should be on a auth server. DO NOT USE THIS IN PRODUCTION
 const signer = SimpleSigner('f3d4417ea84191bf730ab24eedc10cb9c2fa7584bb5bcac1dd5301045346d488')
 
 const uport = new Connect('POE', {
@@ -9,6 +10,7 @@ const uport = new Connect('POE', {
       network: 'rinkeby',
       signer: signer
 })
+// End section
 
 const web3 = uport.getWeb3()
 

@@ -66,10 +66,10 @@ contract('ProofOfExistenceTester', (accounts) => {
     it("verify a IPFS file with an incorrect ipfs hash", async () => {
 	let gasPrice = 500000;
 
-	response = await instance.verifyIPFSHash(hashed_doc, gasPrice, { value: web3.toWei(0.5, 'ether') ,from: user });
+	response = await instance.verifyIPFSHash(hashed_doc, gasPrice, { value: web3.toWei(0.03, 'ether') ,from: user });
         log = response.logs[0];
         assert.equal(log.event, 'LogNewOraclizeQuery', 'LogNewOraclizeQuery not emitted.');
-        assert.equal(log.args.description, "Oraclize query was sent, standing by for the answer..", 'Oracle query failed.. send more eth');
+        assert.equal(log.args._description, "Oraclize query was sent, standing by for the answer..", 'Oracle query failed.. send more eth');
 
 	let status = await instance.getDocumentStatus(hashed_doc);
         assert.equal(status, 2, 'Document status not DocumentBeingVerified');
@@ -81,9 +81,9 @@ contract('ProofOfExistenceTester', (accounts) => {
 
 	status = await instance.getDocumentStatus(hashed_doc);
         assert.equal(status, 4, 'Document status not DocumentVerifyFailed');
-
+	
     });
-    
+
     it("verify a real IPFS file using oracle with external file verification API", async () => {
 
 	let sample_text = "Hello World";
@@ -107,11 +107,11 @@ contract('ProofOfExistenceTester', (accounts) => {
 	let log = response.logs[0];
         assert.equal(log.event, 'DocumentStored', 'DocumentStored not emitted.');
 
-	response = await instance.verifyIPFSHash(sample_hashed_doc, gasPrice, { value: web3.toWei(0.1, 'ether') ,from: user });
+	response = await instance.verifyIPFSHash(sample_hashed_doc, gasPrice, { value: web3.toWei(0.03, 'ether') ,from: user });
 	log = response.logs[0];
 
 	assert.equal(log.event, 'LogNewOraclizeQuery', 'LogNewOraclizeQuery not emitted.');
-        assert.equal(log.args.description, "Oraclize query was sent, standing by for the answer..", 'Oracle query failed.. send more eth');
+        assert.equal(log.args._description, "Oraclize query was sent, standing by for the answer..", 'Oracle query failed.. send more eth');
 
 	let status = await instance.getDocumentStatus(sample_hashed_doc);
         assert.equal(status, 2, 'Document status not DocumentBeingVerified');

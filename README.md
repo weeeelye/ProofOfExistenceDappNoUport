@@ -13,9 +13,9 @@ The function on the blockchain will compare the hash from the user's submitted h
 To run it on localhost, please do the following:
 - Install truffle, ganache-cli, ethereum-bridge (https://github.com/oraclize/ethereum-bridge), localtunnel (https://github.com/localtunnel/localtunnel), along with the usual node, npm
 - Start your ganache-cli in a window
-- Start the Ethereum bridge
+- Start the Ethereum bridge in another window
   - Run: `ethereum-bridge -H localhost:8545 -a 9` where (9) is the account to deploy contract to.
-  - Copy the line that says `OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);` to contracts/ProofOfExistence.sol 's constructor. A commented out line should be present there. Replace it with yours
+  - Copy the line that says `OAR = OraclizeAddrResolverI(0xXXXXXX);` to contracts/ProofOfExistence.sol's constructor. A commented out line should be present there. Replace it with yours
 - Start the backend IPFS file auth server (This is NOT a IPFS node.)
   - Default will be using my server at `http://ec2-18-136-124-79.ap-southeast-1.compute.amazonaws.com/api/getHash?q=`
   - If you do, you can skip straight to "Install the necessary packages"
@@ -27,6 +27,7 @@ To run it on localhost, please do the following:
   - Install dependencies `npm install`
   - Compile contracts `truffle compile`
   - Migrate to blockchain `truffle migrate`
+  - Copy the address ProofOfExistence has been deployed to .env, line "REACT_APP_CONTRACT_ADDRESS"
   - Run `truffle test` to run the tests (You MUST start the backend server to complete the test. This also requires connection to the internet (Using Infura IPFS))
   - Start the server `npm run start`
 
@@ -46,8 +47,9 @@ To run it on Rinkeby, please do the follow:
 - Install the necessary packages for the UI and migrate the contracts to your local blockchain
   - Install dependencies `npm install`
   - Compile contracts `truffle compile`
-  - Migrate to blockchain `truffle migrate`
-  - Run `truffle test` to run the tests (You MUST start the backend server to complete the test. This also requires connection to the internet (Using Infura IPFS))
+  - Migrate to blockchain `truffle migrate --network rinkeby --reset`
+  - Copy the address ProofOfExistence has been deployed to .env, line "REACT_APP_CONTRACT_ADDRESS"
+  - Run `truffle test --network rinkeby` to run the tests (You MUST start the backend server to complete the test. This also requires connection to the internet (Using Infura IPFS)). Note: The tests also take around ~10mins? to complete
   - Start the server `npm run start`
 
 ### Server/Browser

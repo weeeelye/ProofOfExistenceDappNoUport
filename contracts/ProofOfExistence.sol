@@ -58,7 +58,7 @@ contract ProofOfExistence is Ownable, usingOraclize {
 
   constructor() public
   {
-    //OAR = OraclizeAddrResolverI(0x4E8052BA76a00fB0A220500F53A467D5b207E252);
+    //OAR = OraclizeAddrResolverI(0x6f485C8BF6fc43eA212E93BBF8ce046C7f1cb475);
   }
 
   /** @dev Sets the API Gateway for obtaining file hash used for verification.
@@ -193,9 +193,10 @@ contract ProofOfExistence is Ownable, usingOraclize {
   public switchOn documentExist(_docHash) payable
   {
     require((hashToDocuments[_docHash].state != DocumentState.DocumentNull));
-    require(oraclize_getPrice("URL", gasPrice) < msg.value);
+    require((hashToDocuments[_docHash].state != DocumentState.DocumentVerified));
 
-    if (oraclize_getPrice("URL", gasPrice) < msg.value) {
+    if (oraclize_getPrice("URL", gasPrice) < msg.value)
+    {
       hashToDocuments[_docHash].state = DocumentState.DocumentBeingVerified;
       bytes32 queryId = oraclize_query('URL', strConcat('json(', verifyApiCall , hashToDocuments[_docHash].ipfsHash,').actual_hash'));
       queryToHash[queryId] = _docHash;
