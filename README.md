@@ -20,7 +20,8 @@ To run it on localhost, please do the following:
   - Default will be using my server at `http://ec2-18-136-124-79.ap-southeast-1.compute.amazonaws.com/api/getHash?q=`
   - If you do, you can skip straight to "Install the necessary packages"
   - Run: `cd react-backend && npm install`
-  - Run the server: `PORT=3001 node bin/www ` (Please take note of the generated link. You can change the port to whatever you like)
+  - Run the server: `PORT=3001 node bin/www `(You can change the port to whatever you like)
+  - Run localtunnel `lt --port 3001` (Please take note of the URL for next step)
   - Edit .env file and change the line "VERIFYIPFSAPI" to the url (Please update the URL hostname and protocol(https/http) only, the query string are fixed)
 - Install the necessary packages for the UI and migrate the contracts to your local blockchain
   - Install dependencies `npm install`
@@ -39,7 +40,8 @@ To run it on Rinkeby, please do the follow:
   - Default will be using my server at `http://ec2-18-136-124-79.ap-southeast-1.compute.amazonaws.com/api/getHash?q=`
   - If you do, you can skip straight to "Install the necessary packages"
   - Run: `cd react-backend && npm install`
-  - Run the server: `PORT=3001 node bin/www `(Please take note of the generated link. You can change the port to whatever you like)
+  - Run the server: `PORT=3001 node bin/www `(You can change the port to whatever you like)
+  - Run localtunnel `lt --port 3001` (Please take note of the URL for next step)
   - Edit .env file and change the line "VERIFYIPFSAPI" to the url (Please update the URL hostname and protocol(https/http) only, the query string are fixed)
 - Install the necessary packages for the UI and migrate the contracts to your local blockchain
   - Install dependencies `npm install`

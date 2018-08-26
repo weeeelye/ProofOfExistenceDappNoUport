@@ -1,3 +1,8 @@
+/**
+ * Created on: 25 August 2018
+ * @summary: Proof Of Existence Dapp
+ * @author: Wee lye
+ */
 pragma solidity 0.4.24;
 
 import "./Ownable.sol";
@@ -143,15 +148,19 @@ contract ProofOfExistence is Ownable, usingOraclize {
   /** @dev Compares two string and returns true if they are equal, false if they are not.
       * @param a String to be compared with.
       * @param b String to be compared with.
-      * @return bool True if they are equal, false if they are not.
+      * @return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b)) True if they are equal, false if they are not.
       */
   function compareStrings (string a, string b) private pure returns (bool){
        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
   }
 
+/**
+ * @dev:
+ * @param  undefined :
+ */
   /** @dev Callback function for the Oracle to call once they have done fetching data.
       * @param _queryId The query ID from the Oracle.
-      * @param result The result from the Oracle.
+      * @param result The return string from the Oracle.
       */
   function __callback(bytes32 _queryId, string result)
   public
@@ -178,7 +187,7 @@ contract ProofOfExistence is Ownable, usingOraclize {
 
   /** @dev Verifies the data on the IPFS server by calling the Oracle to retrieve its current hash
       * @param _docHash Hash of the document.
-      * @param result Gas price to be used for the Oracle callback.
+      * @param gasPrice Gas price to be used for the Oracle callback.
       */
   function verifyIPFSHash(string _docHash, uint gasPrice)
   public switchOn documentExist(_docHash) payable

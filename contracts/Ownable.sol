@@ -1,3 +1,8 @@
+/**
+ * Created on: 25 August 2018
+ * @summary: Proof Of Existence Dapp
+ * @author: Wee lye
+ */
 pragma solidity 0.4.24;
 
 /** @title Ownable. */
