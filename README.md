@@ -9,6 +9,9 @@ The function on the blockchain will compare the hash from the user's submitted h
 
 ## Getting Started
 
+### Demo Site
+http://ec2-18-136-124-79.ap-southeast-1.compute.amazonaws.com:3000/
+
 ### Running on localhost
 To run it on localhost, please do the following:
 - Install truffle, ganache-cli, ethereum-bridge (https://github.com/oraclize/ethereum-bridge), localtunnel (https://github.com/localtunnel/localtunnel), along with the usual node, npm

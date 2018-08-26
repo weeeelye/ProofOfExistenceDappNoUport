@@ -123,8 +123,12 @@ class Profile extends Component {
   }
 
   verifyFile(fileHash){
-    if(!this.state.verifyStatus[fileHash])
-    {
+
+      if(!this.state.verifyStatus[fileHash])
+      {
+        this.setState({verifyMsg: "A verify process has already been triggered before."})
+      }
+
       let currStatus = this.state.verifyStatus
       currStatus[fileHash] = "Verifying.."
       this.setState({verifyStatus: currStatus})
@@ -141,10 +145,6 @@ class Profile extends Component {
           this.setState({verifyMsg: 'Verification started on transaction: ' + result})
         }
       })
-    }
-    else {
-        this.setState({verifyMsg: "Already being verified"})
-    }
   }
 
   showVerifyMessage(){
