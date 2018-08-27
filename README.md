@@ -3,8 +3,7 @@
 This is a proof of existence dapp. It uses the truffle box react-uport boiler plate.
 
 The web UI provides a way for the user to upload their document data (Hashes, and other data like file name, file data type)
-Although it can be done, it is not practical to code the contract to hash the data on chain, hence the file is hashed on the client (UI) side and uploaded to infura's IPFS
-A oracle service is run such that it will retrieve the file from the IPFS and hash the data.
+Although it can be done, it is not practical to code the contract to hash the data on chain, hence the file is hashed on the client (UI) side and uploaded to infura's IPFS. A oracle service is run such that it will retrieve the file from the IPFS and hash the data.
 The function on the blockchain will compare the hash from the user's submitted hash and the hash that the oracle service provides and update the status on the blockchain.
 
 ## Getting Started
@@ -72,3 +71,13 @@ Each test are aimed at a specific use case, such as storing a document, and veri
 
 ## Libraries
 Uses the Oraclize (https://github.com/oraclize/ethereum-api) API to provide Oracle services. This is stored at installed_contracts/
+
+## Known Issues
+1) Find files always fails on first try.
+Click submit a second time.
+
+2) No files found at "Your Files" page or loading takes forever
+Unfortunately, there could be an issue with the rinkeby infura node that we cannot do about. 
+Sometimes the RPC node is too busy or overloaded it returns a 502 error (Check your browser's console). 
+Sometimes it returns an empty array when queried (May have to do with Infura's caching?). 
+You can load the contract up at Remix with the address from deployed_addresses.txt and it will work.
