@@ -1,2 +1,2 @@
-ProofOfExistence Contract
+ProofOfExistence Contract on Rinkeby
 0x031920e123283a7f58db98879e396a42463e3b03
