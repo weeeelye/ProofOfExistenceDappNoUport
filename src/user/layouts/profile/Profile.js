@@ -27,7 +27,7 @@ class Profile extends Component {
     this.setState({ userAddr: decode(this.props.authData.address).address })
     abiDecoder.addABI(ProofOfExistenceContract.abi)
     this.getRelatedLogs()
-    this.interval = setInterval(() => this.getRelatedLogs(), 5000);
+    this.interval = setInterval(() => this.getRelatedLogs(), 60000);
     //this.interval = setInterval(() => this.getVerifyLogs(), 10000);
   }
 

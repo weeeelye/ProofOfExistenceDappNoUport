@@ -33,11 +33,14 @@ To run it on localhost, please do the following:
   - Migrate to blockchain `truffle migrate`
   - Copy the address ProofOfExistence has been deployed to .env, line "REACT_APP_CONTRACT_ADDRESS"
   - Run `truffle test` to run the tests (You MUST start the backend server to complete the test. This also requires connection to the internet (Using Infura IPFS))
-  - Start the server `npm run start`
+
+- Note: Web app user's authentication requires UPort, thus the web application will not work on localhost
+- Only `truffle test` works on localhost
 
 ### Running on Rinkeby
 To run it on Rinkeby, please do the follow:
 - Get at least 2 Rinkeby accounts with some Eth from the Rinkeby faucet. (For truffle test)
+- Send some Eth to your UPort account
 - Edit `truffle.js` set the `from:` param to your account
 - Run geth: `geth --rinkeby --cache 1024 --ipcpath <IPC_PATH> --syncmode light --rpc --unlock="0,1" --password="<PASSWORD_FILE>"`
 - Wait for your node to sync (5 mins to be safe)
