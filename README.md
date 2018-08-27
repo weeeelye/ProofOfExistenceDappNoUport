@@ -92,4 +92,12 @@ Unfortunately, there could be an issue with the rinkeby infura node that we cann
 
 Sometimes the RPC node is too busy or overloaded it returns a 502 error (Check your browser's console to see them). 
 Sometimes it returns an empty array when queried (May have to do with Infura's caching? There are reports of other people facing the same issue on gitter). 
-You can load the contract up at Remix with the address from deployed_addresses.txt and it will work.
+
+
+Do load the contract up at Remix with the address from deployed_addresses.txt and it will work.
+
+
+3) Transactions are "pending" forever 
+
+
+For some reason, when using Uport to sign the transaction, it will be "pending" forever. As it was working before, it seems to be some bug that appears on 27 August either on UPort's or Infura's side.
