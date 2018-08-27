@@ -32,7 +32,7 @@ To run it on localhost, please do the following:
   - Compile contracts `truffle compile`
   - Migrate to blockchain `truffle migrate`
   - Copy the address ProofOfExistence has been deployed to .env, line "REACT_APP_CONTRACT_ADDRESS"
-  - Run `truffle test` to run the tests (You MUST start the backend server to complete the test. This also requires connection to the internet (Using Infura IPFS))
+  - Run `truffle test` to run the tests (You MUST start the backend server to complete the test *Unless you are using my server `http://ec2-18-136-124-79.ap-southeast-1.compute.amazonaws.com/api/getHash?q=` which in that case you don't have to.* This also requires connection to the internet (Using Infura IPFS))
 
 - Note: Web app user's authentication requires UPort, thus the web application will not work on localhost
 - Only `truffle test` works on localhost
@@ -56,7 +56,7 @@ To run it on Rinkeby, please do the follow:
   - Compile contracts `truffle compile`
   - Migrate to blockchain `truffle migrate --network rinkeby --reset`
   - Copy the address ProofOfExistence has been deployed to .env, line "REACT_APP_CONTRACT_ADDRESS"
-  - Run `truffle test --network rinkeby` to run the tests (You MUST start the backend server to complete the test. This also requires connection to the internet (Using Infura IPFS)). Note: The tests also take around ~10mins? to complete
+  - Run `truffle test` to run the tests (You MUST start the backend server to complete the test *Unless you are using my server `http://ec2-18-136-124-79.ap-southeast-1.compute.amazonaws.com/api/getHash?q=` which in that case you don't have to.* This also requires connection to the internet (Using Infura IPFS))
   - Start the server `npm run start`
 
 ### Server/Browser
