@@ -84,9 +84,9 @@ Click submit a second time.
 2) No files found at "Your Files" page or loading takes forever.
 
 
-Unfortunately, there could be an issue with the rinkeby infura node that we cannot do about. 
+Unfortunately, there could be an issue with the rinkeby infura node that we cannot fix. 
 
 
-Sometimes the RPC node is too busy or overloaded it returns a 502 error (Check your browser's console). 
-Sometimes it returns an empty array when queried (May have to do with Infura's caching?). 
+Sometimes the RPC node is too busy or overloaded it returns a 502 error (Check your browser's console to see them). 
+Sometimes it returns an empty array when queried (May have to do with Infura's caching? There are reports of other people facing the same issue on gitter). 
 You can load the contract up at Remix with the address from deployed_addresses.txt and it will work.
