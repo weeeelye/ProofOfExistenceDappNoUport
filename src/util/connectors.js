@@ -12,7 +12,7 @@ const uport = new Connect('POE', {
 })
 // End section
 
-const web3 = uport.getWeb3()
+const web3 = window.web3
 
 const contract_factory = web3.eth.contract(ProofOfExistenceContract.abi)
 const contract_instance = contract_factory.at(contract_address)

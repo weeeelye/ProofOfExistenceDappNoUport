@@ -19,15 +19,21 @@ class Profile extends Component {
       verifyStatus: [],
       verifyResults: null,
       verifyDecodedData: null,
-      verifyMsg: ""
+      verifyMsg: "",
+      finishedMount: false
     }
   }
 
   componentDidMount() {
-    this.setState({ userAddr: decode(this.props.authData.address).address })
+    //this.setState({ userAddr: decode(this.props.authData.address).address })
+    web3.eth.getAccounts((error, result) => {
+      if(!error){
+        this.setState({ userAddr: result[0], finishedMount: true })
+      }
+    })
     abiDecoder.addABI(ProofOfExistenceContract.abi)
     this.getRelatedLogs()
-    this.interval = setInterval(() => this.getRelatedLogs(), 60000);
+    this.interval = setInterval(() => this.getRelatedLogs(), 10000);
     //this.interval = setInterval(() => this.getVerifyLogs(), 10000);
   }
 
@@ -67,9 +73,21 @@ class Profile extends Component {
   }
 
   getRelatedLogs() {
-    let usraddr = decode(this.props.authData.address)
-    let idx_topic = '0x000000000000000000000000' + usraddr.address.slice(2)
+   if(this.state.finishedMount)
+   {
+    let usraddr = this.state.userAddr
+    let idx_topic = '0x000000000000000000000000' + usraddr.slice(2)
     console.log("Log Topics: ",web3.sha3("DocumentStored(address,string,bytes32,string,bytes32,uint256)"), idx_topic)
+
+    /*
+    contract_instance.DocumentStored({_docOwner: usraddr}, {fromBlock: 0, toBlock: 'latest'},(error, result) => {
+        if(!error && result)
+        {
+          console.log("RESULTZ", result)
+          this.setState({ results: result, decodedData: result })
+        }
+    })*/
+
     web3.currentProvider.sendAsync({
         jsonrpc: "2.0",
         method: "eth_getLogs",
@@ -79,7 +97,7 @@ class Profile extends Component {
                     "toBlock": "latest",
                     "address": contract_address
                 }],
-        id : 2
+        id : 66
         }, (err, result) => {
             if(!err && result && result.result.length > 0)
             {
@@ -94,9 +112,12 @@ class Profile extends Component {
               console.log ("No results")
             }
         })
+    }
   }
 
   getVerifyLogs(){
+   if(this.state.finishedMount)
+   {
     let usraddr = decode(this.props.authData.address)
     let idx_topic = '0x000000000000000000000000' + usraddr.address.slice(2)
     //console.log("Topics",web3.sha3("DocumentStored(address,string,bytes32,string,bytes32,uint256)"), idx_topic)
@@ -120,6 +141,7 @@ class Profile extends Component {
             else if (err)
               console.log ("Error", err)
         })
+    }
   }
 
   verifyFile(fileHash){
@@ -135,7 +157,7 @@ class Profile extends Component {
 
       console.log("Verifying ", fileHash)
 
-      contract_instance.verifyIPFSHash(fileHash, 300000, { gas: 600000, value: 50000000000000000 }, (error,result) =>{
+      contract_instance.verifyIPFSHash(fileHash, 300000, { gas: 600000, value: 20000000000000000 }, (error,result) =>{
         if (error) {
           this.setState({verifyMsg: "Error occurred when calling verify"})
           console.log("Error verifying", error)

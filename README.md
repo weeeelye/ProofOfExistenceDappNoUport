@@ -1,4 +1,4 @@
-# Proof Of Existence DApp Readme
+# Proof Of Existence DApp without UPort signing transactions Readme
 
 This is a proof of existence dapp. It uses the truffle box react-uport boiler plate.
 
@@ -7,6 +7,8 @@ The web UI provides a way for the user to upload their document data (Hashes, an
 
 Although it can be done, it is not practical to code the contract to hash the data on chain, hence the file is hashed on the client (UI) side and uploaded to infura's IPFS. A oracle service is run such that it will retrieve the file from the IPFS and hash the data.
 The function on the blockchain will compare the hash from the user's submitted hash and the hash that the oracle service provides and update the status on the blockchain.
+
+This app is similar to `https://github.com/weeeelye/ProofOfExistenceDapp`. The only difference is that the app uses metamask or web3 injectors instead of using UPort to sign transactions.
 
 ## Getting Started
 
@@ -63,7 +65,7 @@ To run it on Rinkeby, please do the follow:
 The server has been configured to listen on 0.0.0.0 port 3000. Open your browser to http://localhost:3000 to view the web UI.
 
 ### Web3 Injectors
-There is no need for metamask or other web3 injectors. The web3 object is injected by Uport.
+Require Metamask or appropriate web3 injected.
 
 ## Code Structure
 The main solidity contract is at contracts/ProofOfExistence.sol. This contains the main contract logic.
