@@ -28,7 +28,7 @@ class Profile extends Component {
     abiDecoder.addABI(ProofOfExistenceContract.abi)
     this.getRelatedLogs()
     this.interval = setInterval(() => this.getRelatedLogs(), 5000);
-    this.interval = setInterval(() => this.getVerifyLogs(), 10000);
+    //this.interval = setInterval(() => this.getVerifyLogs(), 10000);
   }
 
   getDocPromise(hash) {
@@ -69,7 +69,7 @@ class Profile extends Component {
   getRelatedLogs() {
     let usraddr = decode(this.props.authData.address)
     let idx_topic = '0x000000000000000000000000' + usraddr.address.slice(2)
-    //console.log("Topics",web3.sha3("DocumentStored(address,string,bytes32,string,bytes32,uint256)"), idx_topic)
+    console.log("Log Topics: ",web3.sha3("DocumentStored(address,string,bytes32,string,bytes32,uint256)"), idx_topic)
     web3.currentProvider.sendAsync({
         jsonrpc: "2.0",
         method: "eth_getLogs",
@@ -88,9 +88,9 @@ class Profile extends Component {
               this.getDocStatus()
             }
             else if (err)
-              console.log ("Error", err)
+              console.log ("Failed to retrieve from Infura node.", err)
             else {
-              this.setState({finishedLoading: true })
+              this.setState({ finishedLoading: true })
               console.log ("No results")
             }
         })
@@ -99,7 +99,7 @@ class Profile extends Component {
   getVerifyLogs(){
     let usraddr = decode(this.props.authData.address)
     let idx_topic = '0x000000000000000000000000' + usraddr.address.slice(2)
-    console.log("Topics",web3.sha3("DocumentStored(address,string,bytes32,string,bytes32,uint256)"), idx_topic)
+    //console.log("Topics",web3.sha3("DocumentStored(address,string,bytes32,string,bytes32,uint256)"), idx_topic)
     web3.currentProvider.sendAsync({
         jsonrpc: "2.0",
         method: "eth_getLogs",
@@ -135,13 +135,13 @@ class Profile extends Component {
 
       console.log("Verifying ", fileHash)
 
-      contract_instance.verifyIPFSHash(fileHash, 600000, { gas: 350000, value: 30000000000000000 }, (error,result) =>{
+      contract_instance.verifyIPFSHash(fileHash, 300000, { gas: 600000, value: 50000000000000000 }, (error,result) =>{
         if (error) {
           this.setState({verifyMsg: "Error occurred when calling verify"})
           console.log("Error verifying", error)
         }
         else{
-          console.log(result)
+          console.log("Verify Transaction Hash", result)
           this.setState({verifyMsg: 'Verification started on transaction: ' + result})
         }
       })
